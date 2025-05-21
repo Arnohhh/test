@@ -76,4 +76,4 @@ while True:
     draw_snake(snake)
     draw_food(food)
     pygame.display.flip()
-    clock.tick(10)
+    clock.tick(5)
