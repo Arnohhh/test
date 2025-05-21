@@ -122,5 +122,4 @@ while True:
     draw_food(food, food_color)
     draw_score(score)
     pygame.display.flip()
-    clock.tick(12)
-
+    clock.tick(10)
