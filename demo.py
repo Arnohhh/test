@@ -35,6 +35,7 @@ def move_snake(snake, direction):
     snake.insert(0, head)
     return snake
 
+
 def check_collision(snake):
     head = snake[0]
     # 撞墙
@@ -76,4 +77,4 @@ while True:
     draw_snake(snake)
     draw_food(food)
     pygame.display.flip()
-    clock.tick(10)
+    clock.tick(5)
