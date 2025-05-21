@@ -1,9 +1,44 @@
 import pygame
 import random
 import sys
+import os
+import json
 
 pygame.init()
+import pygame.freetype
 
+# 排行榜文件路径
+SCORE_FILE = "snake_scores.json"
+
+# 加载排行榜
+def load_scores():
+    if os.path.exists(SCORE_FILE):
+        with open(SCORE_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+# 保存排行榜
+def save_scores(scores):
+    with open(SCORE_FILE, "w", encoding="utf-8") as f:
+        json.dump(scores, f, ensure_ascii=False, indent=2)
+
+# 添加分数到排行榜
+def add_score(name, score):
+    scores = load_scores()
+    scores.append({"name": name, "score": score})
+    scores = sorted(scores, key=lambda x: x["score"], reverse=True)[:5]  # 只保留前5名
+    save_scores(scores)
+    return scores
+
+# 显示分数和排行榜
+def draw_score_and_leaderboard(screen, score, font):
+    # 当前分数
+    font.render_to(screen, (10, 10), f"得分: {score}", (255, 255, 0))
+    # 排行榜
+    scores = load_scores()
+    font.render_to(screen, (400, 10), "排行榜:", (255, 255, 255))
+    for i, entry in enumerate(scores):
+        font.render_to(screen, (400, 35 + i * 25), f"{i+1}. {entry['name']} {entry['score']}", (200, 200, 255))
 # 游戏窗口大小
 WIDTH, HEIGHT = 600, 400
 CELL_SIZE = 20
